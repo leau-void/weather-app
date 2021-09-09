@@ -1,14 +1,5 @@
 const userSettings = {};
-
-if ('weatherApp' in localStorage) {
-  Object.keys(localStorage.weatherApp).forEach((prop) => {
-    userSettings[prop] = localStorage.weatherApp[prop];
-  });
-}
-
-let currentData;
-
-const getData = async function (cityObj) {};
+const currentData = {};
 
 const getCity = function fetchCityData(cityName) {
   return fetch(
@@ -19,27 +10,65 @@ const getCity = function fetchCityData(cityName) {
   );
 };
 
-const filterCity = function filterCityObjData(cityObj) {
-  const filteredObj = { ...cityObj };
-  if ('local_names' in filteredObj) delete filteredObj.local_names;
-  return filteredObj;
-};
-
 const updateCity = async function flowControlCityUpdate() {
   try {
     // change to get search input, and to const
     let input;
 
-    let cityData = await getCity(input || 'Montreal,CA');
-    cityData = await cityData.json();
-    [cityData] = cityData;
-    cityData = filterCity(cityData);
-
-    userSettings.city = cityData;
-    console.log(cityData);
+    let cityData = await getCity(input || 'Montreal,CA')
+      .then((response) => response.json())
+      .then(([response]) => response)
+      .then((response) => {
+        const { local_names, ...noLocNames } = response;
+        return noLocNames;
+      });
+    return cityData;
   } catch (err) {
-    console.log(err);
+    console.error(err);
+  }
+};
+const getData = function fetchWeatherData(cityObj) {
+  return fetch(
+    `https://api.openweathermap.org/data/2.5/onecall?lat=${cityObj.lat}&lon=${cityObj.lon}&exclude=minutely,hourly&appid=a01a2fe11847f4f8f8687b526d429f8d`,
+    {
+      mode: 'cors',
+    }
+  );
+};
+
+const updateData = async function updateCurrentDataObj() {
+  try {
+    const data = await getData(userSettings.city)
+      .then((response) => response.json())
+      .then((response) => {
+        const { lat, lon, timezone, timezone_offset, ...filteredObj } = response;
+        return filteredObj;
+      });
+    Object.keys(data).forEach((prop) => {
+      currentData[prop] = data[prop];
+    });
+  } catch (err) {
+    console.error(err);
   }
 };
 
-updateCity();
+(async () => {
+  if ('weatherApp' in localStorage) {
+    const storageObj = JSON.parse(localStorage.weatherApp);
+    Object.keys(storageObj).forEach((prop) => {
+      userSettings[prop] = storageObj[prop];
+    });
+  }
+
+  window.addEventListener('beforeunload', () => {
+    localStorage.weatherApp = JSON.stringify(userSettings);
+  });
+
+  if (!userSettings.city) {
+    userSettings.city = await updateCity();
+  }
+
+  updateData().then();
+
+  console.log(currentData);
+})();
