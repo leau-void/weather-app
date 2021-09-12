@@ -1,6 +1,15 @@
 const userSettings = {};
 const currentData = {};
 
+const filterObj = function returnObjWithPassedInProps(baseObj, props) {
+  const filteredObj = props.reduce((obj, currentProp) => {
+    const newObj = { ...obj };
+    newObj[currentProp] = baseObj[currentProp];
+    return newObj;
+  }, {});
+  return filteredObj;
+};
+
 const getCity = function fetchCityData(cityName) {
   return fetch(
     `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=a01a2fe11847f4f8f8687b526d429f8d`,
@@ -15,13 +24,10 @@ const updateCity = async function flowControlCityUpdate() {
     // change to get search input, and to const
     let input;
 
-    let cityData = await getCity(input || 'Montreal,CA')
+    const cityData = await getCity(input || 'Montreal,CA')
       .then((response) => response.json())
       .then(([response]) => response)
-      .then((response) => {
-        const { local_names, ...noLocNames } = response;
-        return noLocNames;
-      });
+      .then((response) => filterObj(response, ['name', 'country', 'state', 'lat', 'lon']));
     return cityData;
   } catch (err) {
     console.error(err);
@@ -40,10 +46,26 @@ const updateData = async function updateCurrentDataObj() {
   try {
     const data = await getData(userSettings.city)
       .then((response) => response.json())
+      .then((response) => filterObj(response, ['current', 'daily']))
       .then((response) => {
-        const { lat, lon, timezone, timezone_offset, ...filteredObj } = response;
-        return filteredObj;
+        const currentProps = [
+          'dt',
+          'sunrise',
+          'sunset',
+          'temp',
+          'feels_like',
+          'humidity',
+          'clouds',
+          'wind_speed',
+          'weather',
+        ];
+        response.current = filterObj(response.current, currentProps);
+
+        response.daily = response.daily.map((day) => filterObj(day, currentProps));
+
+        return response;
       });
+
     Object.keys(data).forEach((prop) => {
       currentData[prop] = data[prop];
     });
