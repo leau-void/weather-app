@@ -11,6 +11,13 @@ const filterObj = function returnObjWithPassedInProps(baseObj, props) {
   return filteredObj;
 };
 
+const copyProps = function copyEachPropOfObj(baseObj, targetObj) {
+  const target = targetObj;
+  Object.keys(baseObj).forEach((prop) => {
+    target[prop] = baseObj[prop];
+  });
+};
+
 const getCity = function fetchCityData(cityName) {
   return fetch(
     `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=a01a2fe11847f4f8f8687b526d429f8d`,
@@ -29,11 +36,8 @@ const updateCity = async function flowControlCityUpdate() {
       .then((response) => response.json())
       .then(([response]) => response)
       .then((response) => filterObj(response, ['name', 'country', 'state', 'lat', 'lon']));
-    console.log(cityData.name);
 
-    Object.keys(cityData).forEach((prop) => {
-      userSettings.city[prop] = cityData[prop];
-    });
+    copyProps(cityData, userSettings.city);
   } catch (err) {
     console.error(err);
   }
@@ -71,9 +75,9 @@ const updateData = async function updateCurrentDataObj() {
         return response;
       });
 
-    Object.keys(data).forEach((prop) => {
-      currentData[prop] = data[prop];
-    });
+    copyProps(data, currentData);
+
+    console.log(userSettings.city.name);
     console.log(currentData);
   } catch (err) {
     console.error(err);
@@ -91,18 +95,18 @@ const updateWrapper = function updateDataThenDisplay() {
 (async () => {
   if ('weatherApp' in localStorage) {
     const storageObj = JSON.parse(localStorage.weatherApp);
-    Object.keys(storageObj).forEach((prop) => {
-      userSettings[prop] = storageObj[prop];
-    });
+    copyProps(storageObj, userSettings);
   }
-
-  window.addEventListener('beforeunload', () => {
-    localStorage.weatherApp = JSON.stringify(userSettings);
-  });
 
   if (!userSettings.city) {
     await updateCity();
   }
+
+  updateWrapper();
+
+  window.addEventListener('beforeunload', () => {
+    localStorage.weatherApp = JSON.stringify(userSettings);
+  });
 
   form.cityButton.addEventListener('click', (e) => {
     e.preventDefault();
