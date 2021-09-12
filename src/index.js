@@ -1,5 +1,6 @@
 const userSettings = {};
 const currentData = {};
+const form = document.cityForm;
 
 const filterObj = function returnObjWithPassedInProps(baseObj, props) {
   const filteredObj = props.reduce((obj, currentProp) => {
@@ -22,13 +23,17 @@ const getCity = function fetchCityData(cityName) {
 const updateCity = async function flowControlCityUpdate() {
   try {
     // change to get search input, and to const
-    let input;
+    const input = form.cityInput.value;
 
     const cityData = await getCity(input || 'Montreal,CA')
       .then((response) => response.json())
       .then(([response]) => response)
       .then((response) => filterObj(response, ['name', 'country', 'state', 'lat', 'lon']));
-    return cityData;
+    console.log(cityData.name);
+
+    Object.keys(cityData).forEach((prop) => {
+      userSettings.city[prop] = cityData[prop];
+    });
   } catch (err) {
     console.error(err);
   }
@@ -69,9 +74,18 @@ const updateData = async function updateCurrentDataObj() {
     Object.keys(data).forEach((prop) => {
       currentData[prop] = data[prop];
     });
+    console.log(currentData);
   } catch (err) {
     console.error(err);
   }
+};
+
+const updateDisplay = function updateDisplayNewData() {
+  console.log('yes');
+};
+
+const updateWrapper = function updateDataThenDisplay() {
+  updateData().then(updateDisplay);
 };
 
 (async () => {
@@ -87,10 +101,12 @@ const updateData = async function updateCurrentDataObj() {
   });
 
   if (!userSettings.city) {
-    userSettings.city = await updateCity();
+    await updateCity();
   }
 
-  updateData().then();
-
-  console.log(currentData);
+  form.cityButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    updateCity().then(updateWrapper);
+    form.reset();
+  });
 })();
