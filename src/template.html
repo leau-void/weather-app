@@ -13,9 +13,15 @@
   </head>
 
   <body>
-    <form name="cityForm">
-      <input name="cityInput" type="search" />
-      <button name="cityButton">Change city</button>
+    <form name="cityForm" id="cityForm">
+      <input name="cityInput" id="cityInput" type="search" />
+      <button name="cityButton" id="cityButton">Change city</button>
     </form>
+    <input type="range" step="1" min="0" max="1" />
+    <nav>
+      <a href="#/" class="tab active-tab">Today</a>
+      <a href="#/" class="tab">7 Days</a>
+    </nav>
+    <main id="content"></main>
   </body>
 </html>

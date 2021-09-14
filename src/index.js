@@ -1,6 +1,9 @@
+import buildDisplay from './buildDisplay';
+
 const userSettings = {};
 const currentData = {};
 const form = document.cityForm;
+const content = document.getElementById('content');
 
 const filterObj = function returnObjWithPassedInProps(baseObj, props) {
   const filteredObj = props.reduce((obj, currentProp) => {
@@ -29,7 +32,6 @@ const getCity = function fetchCityData(cityName) {
 
 const updateCity = async function flowControlCityUpdate() {
   try {
-    // change to get search input, and to const
     const input = form.cityInput.value;
 
     const cityData = await getCity(input || 'Montreal,CA')
@@ -44,7 +46,7 @@ const updateCity = async function flowControlCityUpdate() {
 };
 const getData = function fetchWeatherData(cityObj) {
   return fetch(
-    `https://api.openweathermap.org/data/2.5/onecall?lat=${cityObj.lat}&lon=${cityObj.lon}&exclude=minutely,hourly&appid=a01a2fe11847f4f8f8687b526d429f8d`,
+    `https://api.openweathermap.org/data/2.5/onecall?lat=${cityObj.lat}&lon=${cityObj.lon}&exclude=minutely,hourly&units=metric&lang=en&appid=a01a2fe11847f4f8f8687b526d429f8d`,
     {
       mode: 'cors',
     }
@@ -58,7 +60,6 @@ const updateData = async function updateCurrentDataObj() {
       .then((response) => filterObj(response, ['current', 'daily']))
       .then((response) => {
         const currentProps = [
-          'dt',
           'sunrise',
           'sunset',
           'temp',
@@ -85,7 +86,7 @@ const updateData = async function updateCurrentDataObj() {
 };
 
 const updateDisplay = function updateDisplayNewData() {
-  console.log('yes');
+  content.replaceChildren(...buildDisplay(currentData));
 };
 
 const updateWrapper = function updateDataThenDisplay() {
