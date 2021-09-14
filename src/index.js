@@ -86,7 +86,7 @@ const updateData = async function updateCurrentDataObj() {
 };
 
 const updateDisplay = function updateDisplayNewData() {
-  content.replaceChildren(...buildDisplay(currentData));
+  content.replaceChildren(...buildDisplay(currentData, userSettings));
 };
 
 const updateWrapper = function updateDataThenDisplay() {
@@ -99,9 +99,9 @@ const updateWrapper = function updateDataThenDisplay() {
     copyProps(storageObj, userSettings);
   }
 
-  if (!userSettings.city) {
-    await updateCity();
-  }
+  if (!userSettings.city) await updateCity();
+
+  if (!userSettings.tempUnit) userSettings.tempUnit = '°C';
 
   updateWrapper();
 

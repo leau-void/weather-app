@@ -4,6 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>weather.io</title>
+    <link rel="stylesheet" href="./normalize.css" />
+    <link rel="stylesheet" href="./style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -13,15 +15,22 @@
   <script defer src="index.bundle.js"></script></head>
 
   <body>
-    <form name="cityForm" id="cityForm">
-      <input name="cityInput" id="cityInput" type="search" />
-      <button name="cityButton" id="cityButton">Change city</button>
-    </form>
-    <input type="range" step="1" min="0" max="1" />
-    <nav>
-      <a href="#/" class="tab active-tab">Today</a>
-      <a href="#/" class="tab">7 Days</a>
-    </nav>
+    <header>
+      <form name="cityForm" id="cityForm">
+        <input name="cityInput" id="cityInput" type="search" />
+        <button name="cityButton" id="cityButton">Change city</button>
+      </form>
+      <label class="switch">
+        <input type="checkbox" />
+        <span class="slider"></span>
+        <div class="toggle-label c">°C</div>
+        <div class="toggle-label f">°F</div>
+      </label>
+      <nav>
+        <a href="#/" class="tab active-tab">Today</a>
+        <a href="#/" class="tab">7 Days</a>
+      </nav>
+    </header>
     <main id="content"></main>
   </body>
 </html>

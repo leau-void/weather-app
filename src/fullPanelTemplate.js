@@ -1,4 +1,8 @@
-export default function fullPanelTemplate(obj, index) {
+import unitConverter from './unitConverter';
+
+export default function fullPanelTemplate(obj, settings, index) {
+  const { tempUnit } = settings;
+  const stringifyTemp = (value) => `${unitConverter(value, tempUnit)} ${tempUnit}`;
   const output = {
     tag: 'div',
     classes: ['full-panel'],
@@ -7,19 +11,28 @@ export default function fullPanelTemplate(obj, index) {
       {
         tag: 'div',
         classes: ['top-panel'],
-        // icon, main, temp, feels_like
+        // icon, main, temp
         children: [
           {
             tag: 'img',
             classes: ['weather-icon'],
             attributes: [['src', `http://openweathermap.org/img/wn/${obj.weather[0].icon}@2x.png`]],
           },
+          {
+            tag: 'h1',
+            classes: ['desc'],
+            text: obj.weather[0].main,
+          },
+          {
+            tag: 'temp',
+            text: stringifyTemp(obj.temp),
+          },
         ],
       },
       {
         tag: 'div',
         classes: ['med-panel'],
-        // humidity, clouds, wind_speed
+        // humidity, clouds, wind_speed, feels_like
         children: [],
       },
       {
