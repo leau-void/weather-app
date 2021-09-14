@@ -1,12 +1,21 @@
+body {
+  min-height: 100vh;
+  height: fit-content;
+}
+
 header {
+  height: 20vh;
 }
 
 #content {
   display: flex;
+  height: 80vh;
   width: 100%;
+  overflow-x: hidden;
 }
 
 #content > * {
+  min-width: 100%;
   width: 100%;
   display: none;
 }
@@ -14,13 +23,13 @@ header {
 .full-panel {
 }
 
+.panel-part {
+}
+
 .top-panel {
 }
 
 .med-panel {
-  width: 20px;
-  height: 20px;
-  background-color: rebeccapurple;
 }
 
 .lower-panel {
@@ -30,8 +39,8 @@ header {
   display: unset;
 }
 
-.daily-div > * > .med-panel,
-.daily-div  > * > .lower-panel {
+[data-index] > .med-panel,
+[data-index] > .lower-panel {
   display: none;
 }
 
@@ -39,10 +48,10 @@ header {
   display: inherit;
 }
 
-.current-div {
+#current-div {
 }
 
-.daily-div  {
+#daily-div  {
 }
 
 .cityForm {
@@ -61,9 +70,6 @@ header {
 }
 
 [data-index] {
-}
-
-.full-panel {
 }
 
 /* The switch - the box around the slider */

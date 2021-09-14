@@ -21,14 +21,14 @@
         <button name="cityButton" id="cityButton">Change city</button>
       </form>
       <label class="switch">
-        <input type="checkbox" />
+        <input id="temp-toggle" type="checkbox" />
         <span class="slider"></span>
         <div class="toggle-label c">°C</div>
         <div class="toggle-label f">°F</div>
       </label>
       <nav>
-        <a href="#/" class="tab active-tab">Today</a>
-        <a href="#/" class="tab">7 Days</a>
+        <a href="#/" data-tab="current-div" class="tab active-tab">Today</a>
+        <a href="#/" data-tab="daily-div" class="tab">7 Days</a>
       </nav>
     </header>
     <main id="content"></main>
