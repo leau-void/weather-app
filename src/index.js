@@ -109,6 +109,19 @@ const updateWrapper = function updateDataThenDisplay() {
     localStorage.weatherApp = JSON.stringify(userSettings);
   });
 
+  document.querySelector('#temp-toggle').addEventListener('click', (e) => {});
+
+  document.querySelector('nav').addEventListener('click', (e) => {
+    const { target } = e;
+    if (!target.classList.contains('tab') || target.classList.contains('active-tab')) return;
+
+    [...target.closest('nav').children].forEach((child) => child.classList.remove('active-tab'));
+    target.classList.add('active-tab');
+
+    [...content.children].forEach((child) => child.classList.remove('active'));
+    document.getElementById(target.dataset.tab).classList.add('active');
+  });
+
   form.cityButton.addEventListener('click', (e) => {
     e.preventDefault();
     updateCity().then(updateWrapper);

@@ -1,5 +1,5 @@
 export default function unitConverter(input, unit) {
-  if (unit === '°F') return (input * 9) / 5 + 32;
+  if (unit === '°F') return Math.round((input * 9) / 5 + 32);
 
-  return input;
+  return Math.round(input);
 }
