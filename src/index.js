@@ -85,8 +85,30 @@ const updateData = async function updateCurrentDataObj() {
   }
 };
 
+const selectTab = function setActiveTab() {
+  if (
+    !content.children[0].classList.contains('active') &&
+    !content.children[1].classList.contains('active')
+  ) {
+    const activeTab = [...document.querySelector('nav').children].find((child) =>
+      child.classList.contains('active-tab')
+    );
+    document.getElementById(activeTab.dataset.tab).classList.add('active');
+  }
+};
+
 const updateDisplay = function updateDisplayNewData() {
   content.replaceChildren(...buildDisplay(currentData, userSettings));
+  selectTab();
+
+  document.querySelector('h1').textContent = userSettings.city.name;
+
+  // dark mode for night
+  if (currentData.current.weather[0].icon.slice(-1) === 'n') {
+    content.classList.add('night');
+  } else {
+    content.classList.remove('night');
+  }
 };
 
 const updateWrapper = function updateDataThenDisplay() {
@@ -94,6 +116,7 @@ const updateWrapper = function updateDataThenDisplay() {
 };
 
 (async () => {
+  const tempToggle = document.querySelector('#temp-toggle');
   if ('weatherApp' in localStorage) {
     const storageObj = JSON.parse(localStorage.weatherApp);
     copyProps(storageObj, userSettings);
@@ -103,13 +126,18 @@ const updateWrapper = function updateDataThenDisplay() {
 
   if (!userSettings.tempUnit) userSettings.tempUnit = '°C';
 
+  tempToggle.checked = userSettings.tempUnit === '°F';
+
   updateWrapper();
 
   window.addEventListener('beforeunload', () => {
     localStorage.weatherApp = JSON.stringify(userSettings);
   });
 
-  document.querySelector('#temp-toggle').addEventListener('click', (e) => {});
+  tempToggle.addEventListener('click', (e) => {
+    userSettings.tempUnit = userSettings.tempUnit === '°C' ? '°F' : '°C';
+    updateDisplay();
+  });
 
   document.querySelector('nav').addEventListener('click', (e) => {
     const { target } = e;
@@ -119,7 +147,8 @@ const updateWrapper = function updateDataThenDisplay() {
     target.classList.add('active-tab');
 
     [...content.children].forEach((child) => child.classList.remove('active'));
-    document.getElementById(target.dataset.tab).classList.add('active');
+    selectTab();
+    //    document.getElementById(target.dataset.tab).classList.add('active');
   });
 
   form.cityButton.addEventListener('click', (e) => {

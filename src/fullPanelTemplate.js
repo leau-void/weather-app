@@ -25,7 +25,7 @@ export default function fullPanelTemplate(obj, settings, index) {
             attributes: [['src', `http://openweathermap.org/img/wn/${obj.weather[0].icon}@2x.png`]],
           },
           {
-            tag: 'h1',
+            tag: 'h2',
             classes: ['desc'],
             text: obj.weather[0].main,
           },
