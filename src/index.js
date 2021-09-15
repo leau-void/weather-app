@@ -38,7 +38,8 @@ const updateCity = async function flowControlCityUpdate() {
       .then((response) => response.json())
       .then(([response]) => response)
       .then((response) => filterObj(response, ['name', 'country', 'state', 'lat', 'lon']));
-
+    
+    userSettings.city = {}
     copyProps(cityData, userSettings.city);
   } catch (err) {
     console.error(err);
