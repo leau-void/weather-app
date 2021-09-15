@@ -1,6 +1,19 @@
+:root {
+  font-size: 100%;
+  --color-bg: white;
+  --color-text: black;
+}
+
+[data-theme='dark'] {
+  --color-bg: black;
+  --color-text: white;
+}
+
 body {
   min-height: 100vh;
   height: fit-content;
+  background-color: var(--color-bg);
+  color: var(--color-text);
 }
 
 header {
@@ -12,9 +25,6 @@ header {
   height: 80vh;
   width: 100%;
   overflow-x: hidden;
-}
-
-.night {
 }
 
 #content > * {

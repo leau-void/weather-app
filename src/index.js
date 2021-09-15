@@ -105,9 +105,9 @@ const updateDisplay = function updateDisplayNewData() {
 
   // dark mode for night
   if (currentData.current.weather[0].icon.slice(-1) === 'n') {
-    content.classList.add('night');
+    document.body.dataset.theme = 'dark';
   } else {
-    content.classList.remove('night');
+    document.body.dataset.theme = 'light';
   }
 };
 
@@ -134,9 +134,29 @@ const updateWrapper = function updateDataThenDisplay() {
     localStorage.weatherApp = JSON.stringify(userSettings);
   });
 
-  tempToggle.addEventListener('click', (e) => {
+  tempToggle.addEventListener('click', () => {
+    const indexActiveDaily = [...content.children[1].children].findIndex((child) =>
+      child.classList.contains('active')
+    );
+
     userSettings.tempUnit = userSettings.tempUnit === '°C' ? '°F' : '°C';
     updateDisplay();
+
+    if (indexActiveDaily > -1) {
+      content.children[1].children[indexActiveDaily].classList.add('active');
+    }
+  });
+
+  content.addEventListener('click', (e) => {
+    const { target } = e;
+    if (
+      !target.closest('.full-panel') ||
+      target.closest('.full-panel').dataset.index === undefined //
+    )
+      return;
+
+    [...content.children[1].children].forEach((child) => child.classList.remove('active'));
+    target.closest('.full-panel').classList.add('active');
   });
 
   document.querySelector('nav').addEventListener('click', (e) => {
