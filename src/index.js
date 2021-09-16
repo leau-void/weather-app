@@ -46,8 +46,8 @@ const updateCity = async function flowControlCityUpdate() {
   }
 };
 const getData = function fetchWeatherData(cityObj) {
-  return fetch(
-    `https://api.openweathermap.org/data/2.5/onecall?lat=${cityObj.lat}&lon=${cityObj.lon}&exclude=minutely,hourly&units=metric&lang=en&appid=a01a2fe11847f4f8f8687b526d429f8d`,
+  return fetch( // removed hourly for test
+    `https://api.openweathermap.org/data/2.5/onecall?lat=${cityObj.lat}&lon=${cityObj.lon}&exclude=minutely&units=metric&lang=en&appid=a01a2fe11847f4f8f8687b526d429f8d`,
     {
       mode: 'cors',
     }
@@ -58,9 +58,10 @@ const updateData = async function updateCurrentDataObj() {
   try {
     const data = await getData(userSettings.city)
       .then((response) => response.json())
-      .then((response) => filterObj(response, ['current', 'daily']))
+      .then((response) => filterObj(response, ['current', 'daily', 'hourly']))
       .then((response) => {
         const currentProps = [
+          'dt',
           'sunrise',
           'sunset',
           'temp',
@@ -150,14 +151,10 @@ const updateWrapper = function updateDataThenDisplay() {
 
   content.addEventListener('click', (e) => {
     const { target } = e;
-    if (
-      !target.closest('.full-panel') ||
-      target.closest('.full-panel').dataset.index === undefined //
-    )
-      return;
+    if (!target.closest('.daily-panel')) return;
 
     [...content.children[1].children].forEach((child) => child.classList.remove('active'));
-    target.closest('.full-panel').classList.add('active');
+    target.closest('.daily-panel').classList.add('active');
   });
 
   document.querySelector('nav').addEventListener('click', (e) => {
