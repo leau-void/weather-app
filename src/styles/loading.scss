@@ -1,0 +1,14 @@
+.loading {
+  background: center / contain no-repeat url(../assets/loading-gif/weather-loading.gif), darkgrey;
+  height: 80vh;
+  width: 100%;
+  transition: opacity 2s ease-out;
+}
+
+.loading__display_transparent {
+  opacity: 0;
+}
+
+.loading__display_hidden {
+  display: none;
+}

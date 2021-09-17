@@ -14,24 +14,26 @@
 
   <body class="body">
     <header class="header">
-      <form name="cityForm" id="cityForm">
-        <input name="cityInput" id="cityInput" type="search" />
-        <button name="cityButton" id="cityButton">Change city</button>
-        <button class="form__button form__button--location"></button>
+      <form class="form">
+        <input class="form__input" type="search" />
+        <button class="form__button form__button_type_submit"></button>
+        <button class="form__button form__button_type_location"></button>
       </form>
-      <h1></h1>
+      <h1 class="city-name"></h1>
       <label class="switch">
-        <input id="temp-toggle" type="checkbox" />
-        <span class="slider"></span>
-        <div class="toggle-label c">°C</div>
-        <div class="toggle-label f">°F</div>
+        <input class="switch__checkbox" type="checkbox" />
+        <span class="switch__slider"></span>
+        <div class="switch__label-div">
+          <div class="switch__label">°C</div>
+          <div class="switch__label">°F</div>
+        </div>
       </label>
-      <nav>
-        <a href="#/" data-tab="current-div" class="tab active-tab">Today</a>
-        <a href="#/" data-tab="daily-div" class="tab">7 Days</a>
+      <nav class="nav">
+        <a href="#/" data-tab="current-div" class="nav__tab nav__tab_active_true">Today</a>
+        <a href="#/" data-tab="daily-div" class="nav__tab">7 Days</a>
       </nav>
     </header>
     <div class="loading"></div>
-    <main id="content"></main>
+    <main class="content"></main>
   </body>
 </html>

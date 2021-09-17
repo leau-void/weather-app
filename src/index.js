@@ -1,12 +1,12 @@
 import './styles/normalize.css';
 import './styles/style.css';
-import './styles/global.scss';
+import './styles/main.scss';
 import buildDisplay from './buildDisplay';
 
 const userSettings = {};
 const currentData = {};
-const form = document.cityForm;
-const content = document.getElementById('content');
+const form = document.getElementsByClassName('form')[0];
+const content = document.getElementsByClassName('content')[0];
 const loading = document.getElementsByClassName('loading')[0];
 
 const filterObj = function returnObjWithPassedInProps(baseObj, props) {
@@ -61,7 +61,7 @@ const updateCity = async function flowControlCityUpdate(pos) {
   try {
     let input;
     let position;
-    if (!pos) input = form.cityInput.value;
+    if (!pos) input = document.getElementsByClassName('form__input')[0].value;
     if (!input) position = await positionWrapper();
 
     const cityData = await getCity(input || position || 'Montreal,CA')
@@ -124,7 +124,7 @@ const selectTab = function setActiveTab() {
     !content.children[1].classList.contains('active')
   ) {
     const activeTab = [...document.querySelector('nav').children].find((child) =>
-      child.classList.contains('active-tab')
+      child.classList.contains('nav__tab_active_true')
     );
     document.getElementById(activeTab.dataset.tab).classList.add('active');
   }
@@ -145,11 +145,11 @@ const updateDisplay = function updateDisplayNewData() {
 };
 
 const toggleLoading = function toggleLoadingHidden() {
-  loading.classList.toggle('loading--transparent');
-  if (loading.classList.contains('loading--hidden')) {
-    loading.classList.remove('loading--hidden');
+  loading.classList.toggle('loading__display_transparent');
+  if (loading.classList.contains('loading__display_hidden')) {
+    loading.classList.remove('loading__display_hidden');
   } else {
-    window.setTimeout(() => loading.classList.add('loading--hidden'), 1000);
+    window.setTimeout(() => loading.classList.add('loading__display_hidden'), 1000);
   }
 };
 
@@ -165,7 +165,7 @@ const buttonHandler = function handleFormButtons(e, pos) {
 };
 
 (async () => {
-  const tempToggle = document.querySelector('#temp-toggle');
+  const tempToggle = document.getElementsByClassName('switch__checkbox')[0];
   if ('weatherApp' in localStorage) {
     const storageObj = JSON.parse(localStorage.weatherApp);
     copyProps(storageObj, userSettings);
@@ -204,22 +204,27 @@ const buttonHandler = function handleFormButtons(e, pos) {
     target.closest('.daily-panel').classList.add('active');
   });
 
-  document.querySelector('nav').addEventListener('click', (e) => {
+  document.getElementsByClassName('nav')[0].addEventListener('click', (e) => {
     const { target } = e;
-    if (!target.classList.contains('tab') || target.classList.contains('active-tab')) return;
+    if (!target.classList.contains('nav__tab') || target.classList.contains('nav__tab_active_true'))
+      return;
 
-    [...target.closest('nav').children].forEach((child) => child.classList.remove('active-tab'));
-    target.classList.add('active-tab');
+    [...target.closest('nav').children].forEach((child) =>
+      child.classList.remove('nav__tab_active_true')
+    );
+    target.classList.add('nav__tab_active_true');
 
     [...content.children].forEach((child) => child.classList.remove('active'));
     selectTab();
     //    document.getElementById(target.dataset.tab).classList.add('active');
   });
 
-  document.getElementsByClassName('form__button--location')[0].addEventListener('click', (e) => {
-    buttonHandler(e, true);
-  });
-  form.cityButton.addEventListener('click', (e) => {
+  document
+    .getElementsByClassName('form__button_type_location')[0]
+    .addEventListener('click', (e) => {
+      buttonHandler(e, true);
+    });
+  document.getElementsByClassName('form__button_type_submit')[0].addEventListener('click', (e) => {
     buttonHandler(e);
   });
 })();

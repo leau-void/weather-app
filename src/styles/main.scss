@@ -1,0 +1,26 @@
+@use 'header';
+@use 'content';
+@use 'panel';
+@use 'loading';
+
+$main-color: yellow;
+$accent-color: green;
+$text-color: black;
+
+:root {
+  font-size: 100%;
+}
+
+.body {
+  background-color: $main-color;
+  color: $text-color;
+  min-height: 100vh;
+  width: 100vw;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+}
+
+.body_theme_dark {
+  $accent-color: orange;
+}
