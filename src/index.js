@@ -1,9 +1,12 @@
+import './styles/normalize.css';
+import './styles/style.css';
 import buildDisplay from './buildDisplay';
 
 const userSettings = {};
 const currentData = {};
 const form = document.cityForm;
 const content = document.getElementById('content');
+const loading = document.getElementsByClassName('loading')[0];
 
 const filterObj = function returnObjWithPassedInProps(baseObj, props) {
   const filteredObj = props.reduce((obj, currentProp) => {
@@ -21,32 +24,59 @@ const copyProps = function copyEachPropOfObj(baseObj, targetObj) {
   });
 };
 
-const getCity = function fetchCityData(cityName) {
-  return fetch(
-    `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=a01a2fe11847f4f8f8687b526d429f8d`,
-    {
-      mode: 'cors',
-    }
-  );
+const getPosition = function getUserPosition() {
+  return new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        resolve(position.coords);
+      },
+      (error) => {
+        reject(error);
+      }
+    );
+  }).catch((e) => console.log(e));
 };
 
-const updateCity = async function flowControlCityUpdate() {
-  try {
-    const input = form.cityInput.value;
+const positionWrapper = async function getPositionWrapper() {
+  const coords = await getPosition();
+  return {
+    lat: coords.latitude,
+    lon: coords.longitude,
+  };
+};
 
-    const cityData = await getCity(input || 'Montreal,CA')
+const getCity = function fetchCityData(city) {
+  const fetchUrl =
+    typeof city === 'object'
+      ? `http://api.openweathermap.org/geo/1.0/reverse?lat=${city.lat}&lon=${city.lon}&appid=a01a2fe11847f4f8f8687b526d429f8d`
+      : `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=a01a2fe11847f4f8f8687b526d429f8d`;
+
+  return fetch(fetchUrl, {
+    mode: 'cors',
+  });
+};
+
+const updateCity = async function flowControlCityUpdate(pos) {
+  try {
+    let input;
+    let position;
+    if (!pos) input = form.cityInput.value;
+    if (!input) position = await positionWrapper();
+
+    const cityData = await getCity(input || position || 'Montreal,CA')
       .then((response) => response.json())
       .then(([response]) => response)
       .then((response) => filterObj(response, ['name', 'country', 'state', 'lat', 'lon']));
-    
-    userSettings.city = {}
+
+    userSettings.city = {};
     copyProps(cityData, userSettings.city);
   } catch (err) {
     console.error(err);
   }
 };
 const getData = function fetchWeatherData(cityObj) {
-  return fetch( // removed hourly for test
+  return fetch(
+    // removed hourly for test
     `https://api.openweathermap.org/data/2.5/onecall?lat=${cityObj.lat}&lon=${cityObj.lon}&exclude=minutely&units=metric&lang=en&appid=a01a2fe11847f4f8f8687b526d429f8d`,
     {
       mode: 'cors',
@@ -113,8 +143,24 @@ const updateDisplay = function updateDisplayNewData() {
   }
 };
 
+const toggleLoading = function toggleLoadingHidden() {
+  loading.classList.toggle('loading--transparent');
+  if (loading.classList.contains('loading--hidden')) {
+    loading.classList.remove('loading--hidden');
+  } else {
+    window.setTimeout(() => loading.classList.add('loading--hidden'), 1000);
+  }
+};
+
 const updateWrapper = function updateDataThenDisplay() {
-  updateData().then(updateDisplay);
+  updateData().then(updateDisplay).then(toggleLoading);
+};
+
+const buttonHandler = function handleFormButtons(e, pos) {
+  e.preventDefault();
+  toggleLoading();
+  updateCity(pos).then(updateWrapper);
+  form.reset();
 };
 
 (async () => {
@@ -169,9 +215,10 @@ const updateWrapper = function updateDataThenDisplay() {
     //    document.getElementById(target.dataset.tab).classList.add('active');
   });
 
+  document.getElementsByClassName('form__button--location')[0].addEventListener('click', (e) => {
+    buttonHandler(e, true);
+  });
   form.cityButton.addEventListener('click', (e) => {
-    e.preventDefault();
-    updateCity().then(updateWrapper);
-    form.reset();
+    buttonHandler(e);
   });
 })();

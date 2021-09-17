@@ -2,14 +2,14 @@
   font-size: 100%;
   --color-bg: white;
   --color-text: white;
-  --img-filter: invert(1);
   --icon-filter: none;
+  --height-header: 25vh;
+  --height-rest: calc(100vh - var(--height-header));
 }
 
 [data-theme='dark'] {
   --color-bg: black;
   --color-text: white;
-  --img-filter: none;
   --icon-filter: invert(1);
 }
 
@@ -24,9 +24,10 @@ body {
 }
 
 header {
-  min-height: 20vh;
-  width: calc(100vw - 20px);
-  max-width: calc(100vw - 20px);
+  height: calc(var(--height-header) - 40px);
+  max-height: calc(var(--height-header) - 40px);
+  width: calc(100% - 20px);
+  max-width: calc(100% - 20px);
   position: relative;
   display: flex;
   flex-direction: row;
@@ -79,7 +80,6 @@ header {
 .top-panel img {
   width: 49%;
   height: 49%;
-  filter: var(--img-filter);
 }
 
 .temp {
@@ -96,10 +96,10 @@ header {
 
 .feels {
   min-width: 37%;
-  
 }
 
-.med-label, .lower-label > * {
+.med-label,
+.lower-label > * {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -111,17 +111,18 @@ header {
   height: 60px;
 }
 
-.med-text, .lower-text {
+.med-text,
+.lower-text {
   font-size: 1.2rem;
   padding-top: 5px;
 }
 
 .full-panel.active {
   min-height: 90vh;
-  
 }
 
-.med-panel, .lower-panel {
+.med-panel,
+.lower-panel {
   padding: 20px 0;
   flex-grow: 0.5;
 }
@@ -130,7 +131,7 @@ header {
   display: flex;
 }
 
-.daily-panel> .med-panel,
+.daily-panel > .med-panel,
 .daily-panel > .lower-panel {
   display: none;
 }
@@ -146,7 +147,16 @@ header {
 }
 
 .cityForm {
-  position: absolute
+  position: absolute;
+}
+
+.form__button {
+}
+
+.form__button--location {
+  width: 40px;
+  height: 40px;
+  background: center / contain no-repeat url(../assets/icons/location-icon.png);
 }
 
 .cityInput {
@@ -251,4 +261,19 @@ input:checked + .slider:before {
 
 .f {
   right: 2px;
+}
+
+.loading {
+  background: center / contain no-repeat url(../assets/loading-gif/weather-loading.gif), darkgrey;
+  height: var(--height-rest);
+  width: 100%;
+  transition: opacity 2s ease-out;
+}
+
+.loading--transparent {
+  opacity: 0;
+}
+
+.loading--hidden {
+  display: none;
 }
