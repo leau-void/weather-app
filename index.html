@@ -4,8 +4,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>weather.io</title>
-    <link rel="stylesheet" href="./normalize.css" />
-    <link rel="stylesheet" href="./style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -19,6 +17,7 @@
       <form name="cityForm" id="cityForm">
         <input name="cityInput" id="cityInput" type="search" />
         <button name="cityButton" id="cityButton">Change city</button>
+        <button class="form__button form__button--location"></button>
       </form>
       <h1></h1>
       <label class="switch">
@@ -32,6 +31,7 @@
         <a href="#/" data-tab="daily-div" class="tab">7 Days</a>
       </nav>
     </header>
+    <div class="loading"></div>
     <main id="content"></main>
   </body>
 </html>
