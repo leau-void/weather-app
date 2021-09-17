@@ -1,6 +1,12 @@
 import tz_lookup from 'tz-lookup';
 import dateConversionWrapper from './dateConversionWrapper';
 import unitConverter from './unitConverter';
+import humidityIcon from './assets/icons/humidity-icon.png';
+import windSpeedIcon from './assets/icons/wind_speed-icon.png';
+import cloudinessIcon from './assets/icons/cloudiness-icon.png';
+import sunriseIcon from './assets/icons/sunrise-icon.png';
+import sunsetIcon from './assets/icons/sunset-icon.png';
+
 
 export default function fullPanelTemplate(obj, settings, index) {
   const { tempUnit } = settings;
@@ -63,10 +69,18 @@ export default function fullPanelTemplate(obj, settings, index) {
       // humidity, clouds, wind_speed
       children: [
         {
-          tag: 'label',
-          classes: ['med-label'],
-          text: 'Humidity',
+          tag: 'div',
+          classes: ['top-info'],
           children: [
+            {
+          tag: 'div',
+          classes: ['med-label'],
+          children: [
+            {
+              tag: 'img',
+              classes: ['panel-icon'],
+              attributes:[['src', humidityIcon]]
+            },
             {
               tag: 'div',
               classes: ['med-text'],
@@ -75,10 +89,14 @@ export default function fullPanelTemplate(obj, settings, index) {
           ],
         },
         {
-          tag: 'label',
+          tag: 'div',
           classes: ['med-label'],
-          text: 'Wind Speed',
           children: [
+                        {
+              tag: 'img',
+              classes: ['panel-icon'],
+              attributes:[['src', windSpeedIcon]]
+            },
             {
               tag: 'div',
               classes: ['med-text'],
@@ -87,10 +105,14 @@ export default function fullPanelTemplate(obj, settings, index) {
           ],
         },
         {
-          tag: 'label',
+          tag: 'div',
           classes: ['med-label'],
-          text: 'Cloudiness',
           children: [
+                        {
+              tag: 'img',
+              classes: ['panel-icon'],
+              attributes:[['src', cloudinessIcon]]
+            },
             {
               tag: 'div',
               classes: ['med-text'],
@@ -98,11 +120,21 @@ export default function fullPanelTemplate(obj, settings, index) {
             },
           ],
         },
+          ]
+        },
         {
-          tag: 'label',
-          classes: ['lower-label'],
-          text: 'Sunrise',
+          tag: 'div',
+          classes: ['bottom-info'],
           children: [
+            {
+          tag: 'div',
+          classes: ['lower-label'],
+          children: [
+                        {
+              tag: 'img',
+              classes: ['panel-icon'],
+              attributes:[['src', sunriseIcon]]
+            },
             {
               tag: 'div',
               classes: ['lower-text'],
@@ -111,16 +143,22 @@ export default function fullPanelTemplate(obj, settings, index) {
           ],
         },
         {
-          tag: 'label',
+          tag: 'div',
           classes: ['lower-label'],
-          text: 'Sunset',
           children: [
+                        {
+              tag: 'img',
+              classes: ['panel-icon'],
+              attributes:[['src', sunsetIcon]]
+            },
             {
               tag: 'div',
               classes: ['lower-text'],
               text: dateConversionMixin(obj.sunset, 'HH:mm'),
             },
           ],
+        },
+          ]
         },
       ],
     })
@@ -129,7 +167,7 @@ export default function fullPanelTemplate(obj, settings, index) {
     output.children[0].children.unshift({
       tag: 'h3',
       classes: ['hour'],
-      text: `${dateConversionMixin(obj.dt, 'HH')}H`
+      text: dateConversionMixin(obj.dt, 'ccc hh a')
     })
   }
 
