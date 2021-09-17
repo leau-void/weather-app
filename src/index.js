@@ -1,5 +1,6 @@
 import './styles/normalize.css';
 import './styles/style.css';
+import './styles/global.scss';
 import buildDisplay from './buildDisplay';
 
 const userSettings = {};
@@ -137,9 +138,9 @@ const updateDisplay = function updateDisplayNewData() {
 
   // dark mode for night
   if (currentData.current.weather[0].icon.slice(-1) === 'n') {
-    document.body.dataset.theme = 'dark';
+    document.body.classList.add('body_theme_dark');
   } else {
-    document.body.dataset.theme = 'light';
+    document.body.classList.remove('body_theme_dark');
   }
 };
 
