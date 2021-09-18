@@ -1,10 +1,3 @@
-#content {
-  display: flex;
-  width: 100%;
-  padding-bottom: 20px;
-  height: fit-content;
-}
-
 #content > * {
   min-width: 100%;
   width: 100%;
@@ -101,10 +94,4 @@
 
 .full-panel.active > * {
   display: flex;
-}
-
-#current-div {
-}
-
-#daily-div  {
 }

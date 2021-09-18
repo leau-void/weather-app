@@ -5,10 +5,10 @@
   transition: opacity 2s ease-out;
 }
 
-.loading__display_transparent {
+.loading_transparent {
   opacity: 0;
 }
 
-.loading__display_hidden {
+.loading_hidden {
   display: none;
 }

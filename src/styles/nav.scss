@@ -1,0 +1,19 @@
+.nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.nav__tab {
+  width: 40%;
+  text-align: center;
+  height: fit-content;
+  padding: 10px 0;
+  border: 1px solid transparent;
+  position: relative;
+  z-index: 99;
+}
+
+.nav__tab_active {
+  border: 1px solid black;
+}

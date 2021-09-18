@@ -5,9 +5,9 @@ import buildDisplay from './buildDisplay';
 
 const userSettings = {};
 const currentData = {};
-const form = document.getElementsByClassName('form')[0];
-const content = document.getElementsByClassName('content')[0];
-const loading = document.getElementsByClassName('loading')[0];
+const form = document.querySelector('.form');
+const content = document.querySelector('.content');
+const loading = document.querySelector('.loading');
 
 const filterObj = function returnObjWithPassedInProps(baseObj, props) {
   const filteredObj = props.reduce((obj, currentProp) => {
@@ -61,7 +61,7 @@ const updateCity = async function flowControlCityUpdate(pos) {
   try {
     let input;
     let position;
-    if (!pos) input = document.getElementsByClassName('form__input')[0].value;
+    if (!pos) input = document.querySelector('.form__input').value;
     if (!input) position = await positionWrapper();
 
     const cityData = await getCity(input || position || 'Montreal,CA')
@@ -77,7 +77,6 @@ const updateCity = async function flowControlCityUpdate(pos) {
 };
 const getData = function fetchWeatherData(cityObj) {
   return fetch(
-    // removed hourly for test
     `https://api.openweathermap.org/data/2.5/onecall?lat=${cityObj.lat}&lon=${cityObj.lon}&exclude=minutely&units=metric&lang=en&appid=a01a2fe11847f4f8f8687b526d429f8d`,
     {
       mode: 'cors',
@@ -120,13 +119,15 @@ const updateData = async function updateCurrentDataObj() {
 
 const selectTab = function setActiveTab() {
   if (
-    !content.children[0].classList.contains('active') &&
-    !content.children[1].classList.contains('active')
+    !document.querySelector('.content__current_active') &&
+    !document.querySelector('.content__daily_active')
   ) {
-    const activeTab = [...document.querySelector('nav').children].find((child) =>
-      child.classList.contains('nav__tab_active_true')
+    let activeTab = [...document.querySelector('.nav').children].find((child) =>
+      child.classList.contains('nav__tab_active')
     );
-    document.getElementById(activeTab.dataset.tab).classList.add('active');
+    activeTab = document.querySelector(`.${activeTab.dataset.tab}`);
+
+    activeTab.classList.add(`${activeTab.classList.value}_active`);
   }
 };
 
@@ -134,7 +135,7 @@ const updateDisplay = function updateDisplayNewData() {
   content.replaceChildren(...buildDisplay(currentData, userSettings));
   selectTab();
 
-  document.querySelector('h1').textContent = userSettings.city.name;
+  document.querySelector('.header__city-name').textContent = userSettings.city.name;
 
   // dark mode for night
   if (currentData.current.weather[0].icon.slice(-1) === 'n') {
@@ -145,11 +146,11 @@ const updateDisplay = function updateDisplayNewData() {
 };
 
 const toggleLoading = function toggleLoadingHidden() {
-  loading.classList.toggle('loading__display_transparent');
-  if (loading.classList.contains('loading__display_hidden')) {
-    loading.classList.remove('loading__display_hidden');
+  loading.classList.toggle('loading_transparent');
+  if (loading.classList.contains('loading_hidden')) {
+    loading.classList.remove('loading_hidden');
   } else {
-    window.setTimeout(() => loading.classList.add('loading__display_hidden'), 1000);
+    window.setTimeout(() => loading.classList.add('loading_hidden'), 1000);
   }
 };
 
@@ -165,7 +166,7 @@ const buttonHandler = function handleFormButtons(e, pos) {
 };
 
 (async () => {
-  const tempToggle = document.getElementsByClassName('switch__checkbox')[0];
+  const tempToggle = document.querySelector('.switch__checkbox');
   if ('weatherApp' in localStorage) {
     const storageObj = JSON.parse(localStorage.weatherApp);
     copyProps(storageObj, userSettings);
@@ -184,47 +185,51 @@ const buttonHandler = function handleFormButtons(e, pos) {
   });
 
   tempToggle.addEventListener('click', () => {
-    const indexActiveDaily = [...content.children[1].children].findIndex((child) =>
-      child.classList.contains('active')
+    const indexActiveDaily = [...document.querySelector('.content__daily').children].findIndex(
+      (child) => child.classList.contains('panel_active')
     );
 
     userSettings.tempUnit = userSettings.tempUnit === '°C' ? '°F' : '°C';
     updateDisplay();
 
     if (indexActiveDaily > -1) {
-      content.children[1].children[indexActiveDaily].classList.add('active');
+      document
+        .querySelector('.content__daily')
+        .children[indexActiveDaily].classList.add('panel_active');
     }
   });
 
   content.addEventListener('click', (e) => {
     const { target } = e;
-    if (!target.closest('.daily-panel')) return;
+    if (!target.closest('.panel_type_daily')) return;
 
-    [...content.children[1].children].forEach((child) => child.classList.remove('active'));
-    target.closest('.daily-panel').classList.add('active');
-  });
-
-  document.getElementsByClassName('nav')[0].addEventListener('click', (e) => {
-    const { target } = e;
-    if (!target.classList.contains('nav__tab') || target.classList.contains('nav__tab_active_true'))
-      return;
-
-    [...target.closest('nav').children].forEach((child) =>
-      child.classList.remove('nav__tab_active_true')
+    [...document.querySelector('.content__daily').children].forEach((child) =>
+      child.classList.remove('panel_active')
     );
-    target.classList.add('nav__tab_active_true');
-
-    [...content.children].forEach((child) => child.classList.remove('active'));
-    selectTab();
-    //    document.getElementById(target.dataset.tab).classList.add('active');
+    target.closest('.panel_type_daily').classList.add('panel_active');
   });
 
-  document
-    .getElementsByClassName('form__button_type_location')[0]
-    .addEventListener('click', (e) => {
-      buttonHandler(e, true);
-    });
-  document.getElementsByClassName('form__button_type_submit')[0].addEventListener('click', (e) => {
+  document.querySelector('.nav').addEventListener('click', (e) => {
+    const { target } = e;
+    if (!target.classList.contains('nav__tab') || target.classList.contains('nav__tab_active')) {
+      return;
+    }
+
+    [...target.closest('.nav').children].forEach((child) =>
+      child.classList.remove('nav__tab_active')
+    );
+    target.classList.add('nav__tab_active');
+
+    document.querySelector('.content__current').classList.remove('content__current_active');
+    document.querySelector('.content__daily').classList.remove('content__daily_active');
+
+    selectTab();
+  });
+
+  document.querySelector('.form__button_type_location').addEventListener('click', (e) => {
+    buttonHandler(e, true);
+  });
+  document.querySelector('.form__button_type_submit').addEventListener('click', (e) => {
     buttonHandler(e);
   });
 })();

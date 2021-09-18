@@ -1,0 +1,20 @@
+.form {
+  display: flex;
+}
+
+.form__input {
+}
+
+.form__button {
+  width: 40px;
+  height: 40px;
+  background: center / contain no-repeat;
+}
+
+.form__button_type_submit {
+  background-image: url(../assets/icons/search-icon.png);
+}
+
+.form__button_type_location {
+  background-image: url(../assets/icons/location-icon.png);
+}
