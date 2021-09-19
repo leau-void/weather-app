@@ -34,17 +34,17 @@ export default function fullPanelTemplate(obj, settings, index) {
           },
           {
             tag: 'div',
-            classes: ['panel__text'],
+            classes: ['panel__text', 'panel__text_type_temp'],
             text: stringifyTemp(obj.temp),
           },
           {
-            tag: 'h2',
-            classes: ['panel__text'],
+            tag: 'div',
+            classes: ['panel__text', 'panel__text_type_desc'],
             text: obj.weather[0].main,
           },
           {
             tag: 'div',
-            classes: ['panel__text'],
+            classes: ['panel__text', 'panel__text_type_feels-like'],
             text: `Feels like ${stringifyTemp(obj.feels_like)}`,
           },
         ],
@@ -156,7 +156,7 @@ export default function fullPanelTemplate(obj, settings, index) {
     output.classes.push('panel_type_hourly');
     output.children[0].children.splice(-2);
     output.children[0].children.unshift({
-      tag: 'h3',
+      tag: 'div',
       classes: ['panel__hourly-time'],
       text: dateConversionMixin(obj.dt, 'ccc hh a'),
     });
@@ -166,7 +166,7 @@ export default function fullPanelTemplate(obj, settings, index) {
     output.classes.push(['panel_type_daily']);
     output.children[1].classes.push('panel__more-info_type_daily');
     output.children[0].children.unshift({
-      tag: 'h3',
+      tag: 'div',
       classes: ['date'],
       text: dateConversionMixin(obj.dt, 'LLL do'),
     });
@@ -182,7 +182,7 @@ export default function fullPanelTemplate(obj, settings, index) {
             {
               tag: 'div',
               text: stringifyTemp(obj.temp.min),
-              classes: ['panel__text'],
+              classes: ['panel__text', 'panel__text_type_temp'],
             },
           ],
         },
@@ -194,7 +194,7 @@ export default function fullPanelTemplate(obj, settings, index) {
             {
               tag: 'div',
               text: stringifyTemp(obj.temp.max),
-              classes: ['panel__text'],
+              classes: ['panel__text', 'panel__text_type_temp'],
             },
           ],
         },
@@ -206,7 +206,7 @@ export default function fullPanelTemplate(obj, settings, index) {
             {
               tag: 'div',
               text: stringifyTemp(obj.temp.morn),
-              classes: ['panel__text'],
+              classes: ['panel__text', 'panel__text_type_temp'],
             },
           ],
         },
@@ -218,7 +218,7 @@ export default function fullPanelTemplate(obj, settings, index) {
             {
               tag: 'div',
               text: stringifyTemp(obj.temp.day),
-              classes: ['panel__text'],
+              classes: ['panel__text', 'panel__text_type_temp'],
             },
           ],
         },
@@ -230,7 +230,7 @@ export default function fullPanelTemplate(obj, settings, index) {
             {
               tag: 'div',
               text: stringifyTemp(obj.temp.eve),
-              classes: ['panel__text'],
+              classes: ['panel__text', 'panel__text_type_temp'],
             },
           ],
         },
@@ -242,7 +242,7 @@ export default function fullPanelTemplate(obj, settings, index) {
             {
               tag: 'div',
               text: stringifyTemp(obj.temp.night),
-              classes: ['panel__text'],
+              classes: ['panel__text', 'panel__text_type_temp'],
             },
           ],
         },

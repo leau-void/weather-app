@@ -1,6 +1,5 @@
 .content {
   width: 100%;
-  padding-bottom: 20px;
   height: fit-content;
 }
 
@@ -8,6 +7,7 @@
   width: 100%;
   display: none;
   flex-direction: column;
+  height: fit-content;
 }
 
 .content__current {
@@ -21,7 +21,8 @@
   flex-direction: row;
   overflow-x: scroll;
   gap: 10px;
-  padding: 10px;
+  padding: 0.5rem;
+  padding-bottom: 0;
 }
 
 .content__current_active {
@@ -30,4 +31,5 @@
 
 .content__daily_active {
   display: flex;
+  gap: 15px;
 }

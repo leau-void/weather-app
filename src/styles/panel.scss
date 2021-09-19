@@ -2,35 +2,76 @@
   display: flex;
   flex-direction: column;
   height: fit-content;
-  box-shadow: 0 0 2px hsl(0deg, 0%, 0.47);
+  max-height: calc(70vh - 10px);
 }
 
 .panel__main {
   width: 100%;
   display: flex;
+  height: fit-content;
   flex-direction: row;
   flex-wrap: wrap;
-  background: var(--panel-color);
-  box-shadow: 0 0 4px hsl(0deg, 0%, 0.44);
+  align-items: center;
+  justify-content: space-evenly;
 }
 
 .panel_type_current {
+  font-size: 1rem;
+
+  .panel__weather-icon {
+    margin: -1.5rem 0 -1.5rem 0;
+  }
+  .panel__main {
+    font-size: 1.3rem;
+  }
 }
 
+// box-shadow: 0 0 4px hsl(0deg, 0%, 44%);
+
 .panel_type_daily {
+  box-shadow: 0 0 8px rgba(0, 0, 0, 35%);
+
+  .panel__text_type_feels-like {
+    display: none;
+  }
+
+  .panel__main {
+    flex-wrap: nowrap;
+  }
+
+  .panel__weather-icon {
+    margin: -1.5rem -1.5rem 0 -1.5rem;
+  }
+
+  .panel__text_type_temp {
+    order: 2;
+    padding: 0;
+  }
+
+  .panel__text_type_desc {
+    order: 1;
+  }
 }
 
 .panel_type_hourly {
   min-width: 30vw;
   width: 30vw;
-  font-size: 14px;
-}
+  padding: 0;
+  border-left: 2px solid rgba(255, 255, 255, 30%);
+  border-right: 2px solid rgba(255, 255, 255, 30%);
 
-.panel_type_hourly .panel__main {
-  flex-direction: column;
-}
-
-.panel__hourly-time {
+  .panel__main {
+    flex-direction: column;
+    font-size: 1rem;
+  }
+  .panel__weather-icon {
+    margin: -0.5rem 0;
+    width: 60%;
+    height: 60%;
+  }
+  .panel__text_type_temp {
+    font-size: 1.3rem;
+  }
 }
 
 .panel_type_daily-temps {
@@ -48,19 +89,37 @@
   padding: 10px;
 }
 
-.panel_active .panel__daily-temps,
-.panel_active .panel__more-info_type_daily {
-  display: flex;
+.panel_active {
+  .panel__daily-temps,
+  .panel__more-info_type_daily {
+    display: flex;
+  }
+
+  .panel__text_type_feels-like {
+    display: block;
+  }
 }
 
 .panel__weather-icon {
-  width: 49%;
-  height: 49%;
-  margin: 0 auto;
+  width: 40%;
+  height: 40%;
 }
 
 .panel__text {
   text-align: center;
+  height: fit-content;
+  font-size: 1em;
+  padding: 0.5rem 0;
+}
+
+.panel__text_type_temp {
+  font-weight: bold;
+  font-size: 1.5em;
+  padding: 0 15%;
+}
+
+.panel__text_type_desc  {
+  font-weight: bold;
 }
 
 .panel__more-info {
@@ -69,8 +128,7 @@
   width: 85%;
   margin: 0 auto;
   border-radius: 10px;
-  border: 2px solid black;
-  box-shadow: 0 0 8px hsl(0deg, 0%, 0.38);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 40%);
 }
 
 .panel__more-info_half {
@@ -78,6 +136,9 @@
   flex-direction: row;
   width: 100%;
   justify-content: space-evenly;
+  .panel__text {
+    padding: 0.25rem 0;
+  }
 }
 
 .panel__label {
@@ -90,4 +151,5 @@
 .panel__label-icon {
   width: 60px;
   height: 60px;
+  filter: invert(1);
 }
