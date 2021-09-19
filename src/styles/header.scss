@@ -1,8 +1,10 @@
 @use 'switch';
+@use 'nav';
+@use 'form';
 
 .header {
-  height: calc(25vh - 40px);
-  max-height: calc(25vh - 40px);
+  height: calc(30vh - 40px);
+  max-height: calc(30vh - 40px);
   width: calc(100% - 20px);
   padding: 20px 10px;
 }
@@ -18,4 +20,5 @@
 }
 
 .header__nav {
+  width: 100%;
 }

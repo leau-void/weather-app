@@ -1,11 +1,11 @@
 .nav {
-  width: 100%;
   display: flex;
   justify-content: space-evenly;
+  gap: 20px;
 }
 
 .nav__tab {
-  width: 40%;
+  flex-grow: 1;
   text-align: center;
   height: fit-content;
   padding: 10px 0;

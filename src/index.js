@@ -125,9 +125,8 @@ const selectTab = function setActiveTab() {
     let activeTab = [...document.querySelector('.nav').children].find((child) =>
       child.classList.contains('nav__tab_active')
     );
-    activeTab = document.querySelector(`.${activeTab.dataset.tab}`);
-
-    activeTab.classList.add(`${activeTab.classList.value}_active`);
+    const activeTabClass = activeTab.dataset.tab;
+    document.querySelector(`.${activeTabClass}`).classList.add(`${activeTabClass}_active`);
   }
 };
 

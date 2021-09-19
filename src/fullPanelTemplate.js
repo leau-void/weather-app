@@ -29,22 +29,22 @@ export default function fullPanelTemplate(obj, settings, index) {
         children: [
           {
             tag: 'img',
-            classes: ['weather-icon'],
+            classes: ['panel__weather-icon'],
             attributes: [['src', `http://openweathermap.org/img/wn/${obj.weather[0].icon}@2x.png`]],
           },
           {
             tag: 'div',
-            classes: ['temp'],
+            classes: ['panel__text'],
             text: stringifyTemp(obj.temp),
           },
           {
             tag: 'h2',
-            classes: ['desc'],
+            classes: ['panel__text'],
             text: obj.weather[0].main,
           },
           {
             tag: 'div',
-            classes: ['feels'],
+            classes: ['panel__text'],
             text: `Feels like ${stringifyTemp(obj.feels_like)}`,
           },
         ],
@@ -52,69 +52,60 @@ export default function fullPanelTemplate(obj, settings, index) {
     ],
   };
 
-  if (index !== undefined) {
-    output.classes.push(['panel_type_daily']);
-    output.children[0].children.unshift({
-      tag: 'h3',
-      classes: ['date'],
-      text: dateConversionMixin(obj.dt, 'LLL do'),
-    });
-  }
-
   if (obj.sunset) {
     output.children.push({
       tag: 'div',
-      classes: ['med-panel', 'panel-part'],
+      classes: ['panel__more-info'],
       // humidity, clouds, wind_speed
       children: [
         {
           tag: 'div',
-          classes: ['top-info'],
+          classes: ['panel__more-info_half'],
           children: [
             {
               tag: 'div',
-              classes: ['med-label'],
+              classes: ['panel__label'],
               children: [
                 {
                   tag: 'img',
-                  classes: ['panel-icon'],
+                  classes: ['panel__label-icon'],
                   attributes: [['src', humidityIcon]],
                 },
                 {
                   tag: 'div',
-                  classes: ['med-text'],
+                  classes: ['panel__text'],
                   text: `${obj.humidity}%`,
                 },
               ],
             },
             {
               tag: 'div',
-              classes: ['med-label'],
+              classes: ['panel__label'],
               children: [
                 {
                   tag: 'img',
-                  classes: ['panel-icon'],
+                  classes: ['panel__label-icon'],
                   attributes: [['src', windSpeedIcon]],
                 },
                 {
                   tag: 'div',
-                  classes: ['med-text'],
+                  classes: ['panel__text'],
                   text: `${obj.wind_speed} m/s`,
                 },
               ],
             },
             {
               tag: 'div',
-              classes: ['med-label'],
+              classes: ['panel__label'],
               children: [
                 {
                   tag: 'img',
-                  classes: ['panel-icon'],
+                  classes: ['panel__label-icon'],
                   attributes: [['src', cloudinessIcon]],
                 },
                 {
                   tag: 'div',
-                  classes: ['med-text'],
+                  classes: ['panel__text'],
                   text: `${obj.clouds}%`,
                 },
               ],
@@ -123,36 +114,36 @@ export default function fullPanelTemplate(obj, settings, index) {
         },
         {
           tag: 'div',
-          classes: ['bottom-info'],
+          classes: ['panel__more-info_half'],
           children: [
             {
               tag: 'div',
-              classes: ['lower-label'],
+              classes: ['panel__label'],
               children: [
                 {
                   tag: 'img',
-                  classes: ['panel-icon'],
+                  classes: ['panel__label-icon'],
                   attributes: [['src', sunriseIcon]],
                 },
                 {
                   tag: 'div',
-                  classes: ['lower-text'],
+                  classes: ['panel__text'],
                   text: dateConversionMixin(obj.sunrise, 'HH:mm'),
                 },
               ],
             },
             {
               tag: 'div',
-              classes: ['lower-label'],
+              classes: ['panel__label'],
               children: [
                 {
                   tag: 'img',
-                  classes: ['panel-icon'],
+                  classes: ['panel__label-icon'],
                   attributes: [['src', sunsetIcon]],
                 },
                 {
                   tag: 'div',
-                  classes: ['lower-text'],
+                  classes: ['panel__text'],
                   text: dateConversionMixin(obj.sunset, 'HH:mm'),
                 },
               ],
@@ -162,11 +153,100 @@ export default function fullPanelTemplate(obj, settings, index) {
       ],
     });
   } else {
+    output.classes.push('panel_type_hourly');
     output.children[0].children.splice(-2);
     output.children[0].children.unshift({
       tag: 'h3',
-      classes: ['hour'],
+      classes: ['panel__hourly-time'],
       text: dateConversionMixin(obj.dt, 'ccc hh a'),
+    });
+  }
+
+  if (index !== undefined) {
+    output.classes.push(['panel_type_daily']);
+    output.children[1].classes.push('panel__more-info_type_daily');
+    output.children[0].children.unshift({
+      tag: 'h3',
+      classes: ['date'],
+      text: dateConversionMixin(obj.dt, 'LLL do'),
+    });
+    output.children.push({
+      tag: 'div',
+      classes: ['content__daily-temps'],
+      children: [
+        {
+          tag: 'div',
+          text: 'Min',
+          classes: ['panel', 'panel_type_daily-temps'],
+          children: [
+            {
+              tag: 'div',
+              text: stringifyTemp(obj.temp.min),
+              classes: ['panel__text'],
+            },
+          ],
+        },
+        {
+          tag: 'div',
+          text: 'Max',
+          classes: ['panel', 'panel_type_daily-temps'],
+          children: [
+            {
+              tag: 'div',
+              text: stringifyTemp(obj.temp.max),
+              classes: ['panel__text'],
+            },
+          ],
+        },
+        {
+          tag: 'div',
+          text: 'Morning',
+          classes: ['panel', 'panel_type_daily-temps'],
+          children: [
+            {
+              tag: 'div',
+              text: stringifyTemp(obj.temp.morn),
+              classes: ['panel__text'],
+            },
+          ],
+        },
+        {
+          tag: 'div',
+          text: 'Day',
+          classes: ['panel', 'panel_type_daily-temps'],
+          children: [
+            {
+              tag: 'div',
+              text: stringifyTemp(obj.temp.day),
+              classes: ['panel__text'],
+            },
+          ],
+        },
+        {
+          tag: 'div',
+          text: 'Eve',
+          classes: ['panel', 'panel_type_daily-temps'],
+          children: [
+            {
+              tag: 'div',
+              text: stringifyTemp(obj.temp.eve),
+              classes: ['panel__text'],
+            },
+          ],
+        },
+        {
+          tag: 'div',
+          text: 'Night',
+          classes: ['panel', 'panel_type_daily-temps'],
+          children: [
+            {
+              tag: 'div',
+              text: stringifyTemp(obj.temp.night),
+              classes: ['panel__text'],
+            },
+          ],
+        },
+      ],
     });
   }
 

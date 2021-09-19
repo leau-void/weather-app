@@ -8,10 +8,10 @@
 }
 
 .body {
-  --main-color: yellow;
-  --accent-color: red;
+  --main-color: linear-gradient(rgb(231, 191, 0), rgb(229, 112, 0));
+  --panel-color: rgba(255, 255, 255, 0.2);
   --text-color: black;
-  background-color: var(--main-color);
+  background: var(--main-color);
   color: var(--text-color);
   min-height: 100vh;
   width: 100vw;
@@ -21,5 +21,6 @@
 }
 
 .body_theme_dark {
-  --main-color: red;
+  --main-color: linear-gradient(rgb(92, 107, 204), rgb(74, 18, 151));
+  --panel-color: rgb(86, 81, 118);
 }

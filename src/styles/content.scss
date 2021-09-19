@@ -4,14 +4,36 @@
   height: fit-content;
 }
 
+.content__part {
+  width: 100%;
+  display: none;
+  flex-direction: column;
+}
+
 .content__current {
 }
 
 .content__daily  {
 }
 
+.content__hourly {
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+  gap: 10px;
+}
+
+.content__daily-temps {
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+  gap: 10px;
+}
+
 .content__current_active {
+  display: flex;
 }
 
 .content__daily_active {
+  display: flex;
 }
