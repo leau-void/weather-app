@@ -1,19 +1,26 @@
 .nav {
   display: flex;
   justify-content: space-evenly;
-  gap: 20px;
+  height: fit-content;
+  gap: 10px;
 }
 
 .nav__tab {
   flex-grow: 1;
   text-align: center;
-  height: fit-content;
-  padding: 10px 0;
+  padding: 0.5rem 0;
   border: 1px solid transparent;
   position: relative;
   z-index: 99;
+  text-decoration: none;
+  border-radius: 10px;
+}
+
+.nav__tab:visited {
+  color: unset;
 }
 
 .nav__tab_active {
-  border: 1px solid black;
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 6px hsla(0deg, 0%, 0.3);
 }

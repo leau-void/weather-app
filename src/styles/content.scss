@@ -21,13 +21,7 @@
   flex-direction: row;
   overflow-x: scroll;
   gap: 10px;
-}
-
-.content__daily-temps {
-  display: flex;
-  flex-direction: row;
-  overflow-x: scroll;
-  gap: 10px;
+  padding: 10px;
 }
 
 .content__current_active {

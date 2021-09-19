@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   height: fit-content;
-  box-shadow: 0 0 2px hsl(0deg, 0%, 0% / 0.47);
+  box-shadow: 0 0 2px hsl(0deg, 0%, 0.47);
 }
 
 .panel__main {
@@ -11,7 +11,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   background: var(--panel-color);
-  box-shadow: 0 0 4px hsl(0deg, 0%, 0% / 0.44);
+  box-shadow: 0 0 4px hsl(0deg, 0%, 0.44);
 }
 
 .panel_type_current {
@@ -34,14 +34,21 @@
 }
 
 .panel_type_daily-temps {
-  display: none;
   font-weight: bold;
   min-width: 30vw;
   width: 40vw;
   text-align: center;
 }
 
-.panel_active .panel_type_daily-temps,
+.panel__daily-temps {
+  display: none;
+  flex-direction: row;
+  overflow-x: scroll;
+  gap: 10px;
+  padding: 10px;
+}
+
+.panel_active .panel__daily-temps,
 .panel_active .panel__more-info_type_daily {
   display: flex;
 }
@@ -63,7 +70,7 @@
   margin: 0 auto;
   border-radius: 10px;
   border: 2px solid black;
-  box-shadow: 0 0 8px hsl(0deg, 0%, 0% / 0.38);
+  box-shadow: 0 0 8px hsl(0deg, 0%, 0.38);
 }
 
 .panel__more-info_half {

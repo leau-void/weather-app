@@ -21,7 +21,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #f37e21;
+  background-color: #e57000;
   -webkit-transition: 0.4s;
   transition: 0.4s;
 }
@@ -39,11 +39,11 @@
 }
 
 .switch__checkbox:checked + .switch__slider {
-  background-color: #2196f3;
+  background-color: #4a1297;
 }
 
 .switch__checkbox:focus + .switch__slider {
-  box-shadow: 0 0 1px #2196f3;
+  box-shadow: 0 0 1px #4a1297;
 }
 
 .switch__checkbox:checked + .switch__slider:before {

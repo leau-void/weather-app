@@ -172,7 +172,7 @@ export default function fullPanelTemplate(obj, settings, index) {
     });
     output.children.push({
       tag: 'div',
-      classes: ['content__daily-temps'],
+      classes: ['panel__daily-temps'],
       children: [
         {
           tag: 'div',
