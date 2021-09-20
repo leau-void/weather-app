@@ -12,6 +12,7 @@
   --darker-color: rgb(229, 112, 0);
   --gradient: linear-gradient(var(--lighter-color), var(--darker-color));
   --text-color: white;
+  --filter: none;
   font-family: 'Ubuntu', sans-serif;
   background: var(--gradient);
   color: var(--text-color);
@@ -25,4 +26,5 @@
 .body_theme_dark {
   --lighter-color: rgb(92, 107, 204);
   --darker-color: rgb(74, 18, 151);
+  --filter: invert(1);
 }
