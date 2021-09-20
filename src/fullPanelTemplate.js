@@ -158,7 +158,7 @@ export default function fullPanelTemplate(obj, settings, index) {
     output.children[0].children.unshift({
       tag: 'div',
       classes: ['panel__hourly-time'],
-      text: dateConversionMixin(obj.dt, 'ccc hh a'),
+      text: dateConversionMixin(obj.dt, 'ccc hh aaa'),
     });
   }
 
