@@ -1,0 +1,16 @@
+@media (min-height: 850px) {
+  .header {
+    height: 20vh;
+  }
+
+  .header__switch {
+    top: 11vh;
+  }
+
+  .content__part {
+    min-height: 80vh;
+  }
+  .content__current {
+    height: 80vh;
+  }
+}

@@ -5,13 +5,15 @@
 
 .content__part {
   width: 100%;
+  min-height: 70vh;
+  position: relative;
   display: none;
   flex-direction: column;
-  min-height: 70vh;
   justify-content: space-evenly;
 }
 
 .content__current {
+  height: 70vh;
 }
 
 .content__daily  {
@@ -32,6 +34,6 @@
 
 .content__daily_active {
   display: flex;
-  gap: 15px;
-  padding: 15px 0;
+  gap: 3vh;
+  padding: 3vh 0;
 }
