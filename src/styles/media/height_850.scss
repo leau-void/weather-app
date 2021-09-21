@@ -1,16 +1,17 @@
 @media (min-height: 850px) {
   .header {
-    height: 20vh;
+    height: 24vh;
   }
 
   .header__switch {
-    top: 11vh;
+    top: 10vh;
   }
 
   .content__part {
     min-height: 80vh;
   }
   .content__current {
-    height: 80vh;
+    min-height: unset;
+    height: 76vh;
   }
 }

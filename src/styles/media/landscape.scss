@@ -1,0 +1,89 @@
+@media (orientation: landscape) {
+  .header {
+    flex-direction: row;
+  }
+  .panel_type_current {
+    flex-wrap: wrap;
+    .panel__weather-icon {
+      width: 20%;
+    }
+    .panel__more-info {
+      width: 45%;
+      height: fit-content;
+      padding: 5px;
+      gap: 15px;
+    }
+
+    .content__hourly {
+      width: 35vw;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      flex-direction: row;
+      flex-wrap: wrap;
+      height: 90%;
+      flex-shrink: 0;
+    }
+  }
+  .panel_type_daily {
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    .panel__main {
+      width: 100%;
+    }
+    .panel__more-info {
+      width: 40%;
+      height: fit-content;
+      padding: 20px;
+      margin: 0;
+      margin-bottom: 20px;
+    }
+  }
+
+  .panel__daily-temps {
+    flex-wrap: wrap;
+    width: 40%;
+    gap: 5px;
+    overflow-x: hidden;
+  }
+  .panel_type_daily-temps {
+    min-height: unset;
+    height: 10vh;
+    min-width: unset;
+    width: 30%;
+  }
+
+  .panel_type_hourly {
+    min-height: 10vh;
+    min-width: unset;
+    width: 15vw;
+    height: fit-content;
+    box-sizing: border-box;
+    .panel__main {
+      height: fit-content;
+    }
+    .panel__weather-icon {
+      width: 60%;
+    }
+  }
+
+  .header__form {
+    flex-basis: 40%;
+  }
+  .header__city-name {
+    flex-basis: 30%;
+  }
+  .header__switch {
+    position: relative;
+    margin-left: auto;
+    flex-shrink: 0;
+
+    top: 3vh;
+    right: 3vh;
+  }
+  @media (max-width: 568px) {
+    .header__switch {
+      transform: scale(0.8);
+    }
+  }
+}

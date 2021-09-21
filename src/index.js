@@ -40,6 +40,7 @@ const getPosition = function getUserPosition() {
 
 const positionWrapper = async function getPositionWrapper() {
   const coords = await getPosition();
+  if (!coords) return false;
   return {
     lat: coords.latitude,
     lon: coords.longitude,
