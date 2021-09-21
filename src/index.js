@@ -49,8 +49,8 @@ const positionWrapper = async function getPositionWrapper() {
 const getCity = function fetchCityData(city) {
   const fetchUrl =
     typeof city === 'object'
-      ? `http://api.openweathermap.org/geo/1.0/reverse?lat=${city.lat}&lon=${city.lon}&appid=a01a2fe11847f4f8f8687b526d429f8d`
-      : `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=a01a2fe11847f4f8f8687b526d429f8d`;
+      ? `https://api.openweathermap.org/geo/1.0/reverse?lat=${city.lat}&lon=${city.lon}&appid=a01a2fe11847f4f8f8687b526d429f8d`
+      : `https://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=a01a2fe11847f4f8f8687b526d429f8d`;
 
   return fetch(fetchUrl, {
     mode: 'cors',
