@@ -1,5 +1,4 @@
 import './styles/normalize.css';
-import './styles/style.css';
 import './styles/main.scss';
 import buildDisplay from './buildDisplay';
 
@@ -123,7 +122,7 @@ const selectTab = function setActiveTab() {
     !document.querySelector('.content__current_active') &&
     !document.querySelector('.content__daily_active')
   ) {
-    let activeTab = [...document.querySelector('.nav').children].find((child) =>
+    const activeTab = [...document.querySelector('.nav').children].find((child) =>
       child.classList.contains('nav__tab_active')
     );
     const activeTabClass = activeTab.dataset.tab;
