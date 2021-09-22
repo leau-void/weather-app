@@ -30,7 +30,7 @@ export default function fullPanelTemplate(obj, settings, index) {
           {
             tag: 'img',
             classes: ['panel__weather-icon'],
-            attributes: [['src', `http://openweathermap.org/img/wn/${obj.weather[0].icon}@2x.png`]],
+            attributes: [['src', `https://openweathermap.org/img/wn/${obj.weather[0].icon}@2x.png`]],
           },
           {
             tag: 'div',
