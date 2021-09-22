@@ -34,7 +34,9 @@ const getPosition = function getUserPosition() {
         reject(error);
       }
     );
-  }).catch((e) => console.log(e));
+  }).catch((err) => {
+    throw new Error(err);
+  });
 };
 
 const positionWrapper = async function getPositionWrapper() {
@@ -72,7 +74,7 @@ const updateCity = async function flowControlCityUpdate(pos) {
     userSettings.city = {};
     copyProps(cityData, userSettings.city);
   } catch (err) {
-    console.error(err);
+    throw new Error(err);
   }
 };
 const getData = function fetchWeatherData(cityObj) {
@@ -109,11 +111,8 @@ const updateData = async function updateCurrentDataObj() {
       });
 
     copyProps(data, currentData);
-
-    console.log(userSettings.city.name);
-    console.log(currentData);
   } catch (err) {
-    console.error(err);
+    throw new Error(err);
   }
 };
 
